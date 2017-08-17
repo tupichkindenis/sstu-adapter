@@ -1,20 +1,13 @@
 package com.thewhite.sstuapp.web.rest;
-
-import com.sun.tools.javac.util.ArrayUtils;
-import com.thewhite.sstuapp.domain.Department;
 import com.thewhite.sstuapp.service.dto.ErrorDTO;
 import com.thewhite.sstuapp.service.dto.PagedRequestsDTO;
-import com.thewhite.sstuapp.service.dto.RequestDTO;
 import io.swagger.annotations.*;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by tupichkindenis on 16.08.17.
