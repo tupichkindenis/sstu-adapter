@@ -25,24 +25,58 @@ import java.util.UUID;
 @Api(value = "Handling report", description = "Handling report api")
 public class HandlingReportResource {
 
+    /**
+     *
+     * @param id
+     * @param depID
+     * @param isDirect
+     * @param numberFilter
+     * @param createDateFrom
+     * @param createDateTo
+     * @param incomingDateFrom
+     * @param incomingDateTo
+     * @param registrationDateFrom
+     * @param registrationDateTo
+     * @param registrationNumberFilter
+     * @param status
+     * @param codeFilter
+     * @param transferDepartmentID
+     * @param transferDateFrom
+     * @param transferDateTo
+     * @param transferNumberFilter
+     * @param pageSize
+     * @param pageNumber
+     * @return
+     */
     @ApiOperation(
             value = "Получение пейдженированного отчета о загруженных обрашениях",
             notes = "Получение пейджинированного списка вопросов. Поддерживается фильтрация по различным полям.",
             response = PagedRequestsDTO.class, tags = {"Handling report service"} )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = PagedRequestsDTO.class),
-            @ApiResponse(code = 400, message = "The request was invalid or cannot be otherwise served.", response = ErrorDTO.class),
-            @ApiResponse(code = 401, message = "Authentication credentials were missing or incorrect.", response = ErrorDTO.class),
-            @ApiResponse(code = 403, message = "The request is understood, but it has been refused or access is not allowed.", response = ErrorDTO.class),
-            @ApiResponse(code = 404, message = "The URI requested is invalid or the resource requested does not exists.", response = ErrorDTO.class),
-            @ApiResponse(code = 409, message = "Any message which should help the user to resolve the conflict.", response = ErrorDTO.class),
-            @ApiResponse(code = 429, message = "The request cannot be served due to the application’s rate limit having been exhausted for the resource.", response = ErrorDTO.class),
-            @ApiResponse(code = 500, message = "Something is broken.", response = ErrorDTO.class),
-            @ApiResponse(code = 503, message = "The server is up, but overloaded with requests. Try again later.", response = ErrorDTO.class) })
-    @RequestMapping(value = "/get-page-data", produces = { "application/json" }, method = RequestMethod.GET)
+            @ApiResponse(code = 200, message = "Success", response = PagedRequestsDTO.class)
+    })
+    @RequestMapping(value = "/getData", produces = { "application/json" }, method = RequestMethod.GET)
     public ResponseEntity<PagedRequestsDTO> getPageData(
-            @ApiParam(value = "Размер страницы", defaultValue = "20") @RequestParam(value = "pageSize", required = false, defaultValue="20") Integer pageSize,
-            @ApiParam(value = "Номер страницы.", defaultValue = "0") @RequestParam(value = "pageNumber", required = false, defaultValue="0") Integer pageNumber) {
+            @ApiParam(value = "ID обращения", type = "long")                                                        @RequestParam(value = "id", required = false) Long id,
+            @ApiParam(value = "ID департамента, выгрузившего обращения.", type = "string", format = "GUID")         @RequestParam(value = "departmentUuid", required = false) String depID,
+            @ApiParam(value = "Только обращения поступившие напрямую от заявитеоя.", type = "boolean")              @RequestParam(value = "direct", required = false, defaultValue = "false") Boolean isDirect,
+            @ApiParam(value = "Рег. № сопровод. документа")                                                         @RequestParam(value = "numberFilter", required = false) String numberFilter,
+            @ApiParam(value = "Дата документа, с...", type = "string", format = "date")                             @RequestParam(value = "createDateFrom", required = false) String createDateFrom,
+            @ApiParam(value = "Дата документа, по...", type = "string", format = "date", example = "2016-11-15")    @RequestParam(value = "createDateTo", required = false)   String createDateTo,
+            @ApiParam(value = "Дата поступления в орган, с...", type = "string", format = "date")                   @RequestParam(value = "incomingDateFrom", required = false) String incomingDateFrom,
+            @ApiParam(value = "Дата поступления в орган, по...", type = "string", format = "date")                  @RequestParam(value = "incomingDateTo", required = false) String incomingDateTo,
+            @ApiParam(value = "Дата регистрации в органе, с...", type = "string", format = "date")                  @RequestParam(value = "registrationDateFrom", required = false) String registrationDateFrom,
+            @ApiParam(value = "Дата регистрации в органе, по...", type = "string", format = "date")                 @RequestParam(value = "registrationDateTo", required = false) String registrationDateTo,
+            @ApiParam(value = "Рег. № документа в органе", type = "string")                                         @RequestParam(value = "registrationNumberFilter", required = false) String registrationNumberFilter,
+            @ApiParam(value = "Статус", type = "string")                                                            @RequestParam(value = "status", required = false) String status,
+            @ApiParam(value = "Код вопроса", type = "string")                                                       @RequestParam(value = "codeFilter", required = false) String codeFilter,
+            @ApiParam(value = "ID департамента, куда перенаправлен вопрос", type = "string", format = "UUID")       @RequestParam(value = "transferDepartmentID", required = false) String transferDepartmentID,
+            @ApiParam(value = "Дата направления вопроса, с...")                                                     @RequestParam(value = "transferDateFrom", required = false) String transferDateFrom,
+            @ApiParam(value = "Дата направления вопроса, по...")                                                    @RequestParam(value = "transferDateTo", required = false) String transferDateTo,
+            @ApiParam(value = "Рег. # исходящего сопровод. документа.")                                             @RequestParam(value = "transferNumberFilter", required = false) String transferNumberFilter,
+            //
+            @ApiParam(value = "Размер страницы", defaultValue = "20")                                               @RequestParam(value = "pageSize", required = false, defaultValue="20") Integer pageSize,
+            @ApiParam(value = "Номер страницы.", defaultValue = "0")                                                @RequestParam(value = "pageNumber", required = false, defaultValue="0") Integer pageNumber) {
 
 
         ProcessingDTO processingDTO_1 = new ProcessingDTO();
