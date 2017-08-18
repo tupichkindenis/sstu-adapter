@@ -1,5 +1,5 @@
 package com.thewhite.sstuapp.domain;
-import com.thewhite.sstuapp.domain.enumeration.QuestionStatus;
+import com.thewhite.sstuapp.domain.enumeration.QuestionStatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +34,7 @@ public class Processing extends AbstractAuditingEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private QuestionStatus status;
+    private QuestionStatusEnum status;
 
     @ManyToOne
     @JoinTable(name = "transfer_department_id")

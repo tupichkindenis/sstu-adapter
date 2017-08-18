@@ -1,20 +1,22 @@
 package com.thewhite.sstuapp.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.thewhite.sstuapp.domain.enumeration.QuestionStatus;
+import com.thewhite.sstuapp.domain.enumeration.QuestionStatusEnum;
 import com.thewhite.sstuapp.domain.enumeration.UploadStatusEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by tupichkindenis on 15.08.17.
  */
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcessingDTO {
 
     @ApiModelProperty(
@@ -24,14 +26,6 @@ public class ProcessingDTO {
             position = 1)
     @JsonProperty("id")
     private Long id = null;
-
-    @ApiModelProperty(
-            value = "Идентификатор вопроса.",
-            required = true,
-            example = "123",
-            position = 3)
-    @JsonProperty("question_id")
-    private Long questionId = null;
 
     @ApiModelProperty(
             value = "Текущий статус.",
@@ -49,7 +43,7 @@ public class ProcessingDTO {
                     "LeftWithoutAnswer",
             position = 4)
     @JsonProperty("status")
-    private QuestionStatus status;
+    private QuestionStatusEnum status;
 
     @ApiModelProperty(
             value = "Признак того были ли приняты меры или нет. (Используется для статуса Supported).",
@@ -64,7 +58,8 @@ public class ProcessingDTO {
             example = "2016-11-19",
             position = 5)
     @JsonProperty("responseDate")
-    private LocalDate responseDate = null;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private Date responseDate = null;
 
     @ApiModelProperty(
             value = "Информация о перенеправлении вопроса в другой орган.",
@@ -81,8 +76,9 @@ public class ProcessingDTO {
     @ApiModelProperty(
             value = "Дата и время последнего обновления действия.",
             position = 8)
-    @JsonProperty("lastModifiedDate")
-    private LocalDateTime lastModifiedDateTime = null;
+    @JsonProperty("lastModifiedDateUtc")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "UTC")
+    private Date lastModifiedDateTimeUtc = null;
 
     @ApiModelProperty(
             value = "Статус выгрузки в ССТУ",

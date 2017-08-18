@@ -2,6 +2,7 @@ package com.thewhite.sstuapp.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@Builder
 public class AttachmentDTO {
 
     @ApiModelProperty(value = "Идентификатор файла вложения.", required = true, example = "123", position = 1)

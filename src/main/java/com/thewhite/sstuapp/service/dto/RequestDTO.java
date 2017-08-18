@@ -1,7 +1,9 @@
 package com.thewhite.sstuapp.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.thewhite.sstuapp.domain.enumeration.RequestFormat;
+import com.thewhite.sstuapp.domain.enumeration.RequestFormatEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,12 +13,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Setter
 @Getter
 @EqualsAndHashCode
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RequestDTO {
 
     @ApiModelProperty(
@@ -42,7 +46,7 @@ public class RequestDTO {
             allowableValues = "Electronic,Other",
             position = 3)
     @JsonProperty("format")
-    private RequestFormat format = null;
+    private RequestFormatEnum format = null;
 
     @ApiModelProperty(
             value = "Регистрационный номер сопроводительного письма, с которым обращение поступило из " +
@@ -59,21 +63,24 @@ public class RequestDTO {
             example = "2016-11-15",
             position = 5)
     @JsonProperty("createDate")
-    private LocalDate createDate = null;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private Date createDate = null;
 
     @ApiModelProperty(
             value = "Дата поступления обращения в орган.",
             example = "2016-11-15",
             position = 6)
     @JsonProperty("incomingDate")
-    private LocalDate incomingDate = null;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private Date incomingDate = null;
 
     @ApiModelProperty(
             value = "Дата регистрации обращения в органе.",
             example = "2016-11-15",
             position = 7)
     @JsonProperty("registrationDate")
-    private LocalDate registrationDate = null;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    private Date registrationDate = null;
 
     @ApiModelProperty(
             value = "Регистрационный номер, присвоенный обращению при регистрации в органе власти.",

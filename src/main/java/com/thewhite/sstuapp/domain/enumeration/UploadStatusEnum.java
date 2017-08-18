@@ -1,7 +1,7 @@
 package com.thewhite.sstuapp.domain.enumeration;
 
 /**
- * RequestFormat — формат обращения.
+ * RequestFormatEnum — формат обращения.
  */
 public enum UploadStatusEnum {
     None            ("None"),    // Выгрузка не производилась

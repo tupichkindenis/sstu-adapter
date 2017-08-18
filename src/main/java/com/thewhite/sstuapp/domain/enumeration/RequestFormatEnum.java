@@ -1,16 +1,16 @@
 package com.thewhite.sstuapp.domain.enumeration;
 
 /**
- * RequestFormat — формат обращения.
+ * RequestFormatEnum — формат обращения.
  */
-public enum RequestFormat {
+public enum RequestFormatEnum {
     Electronic  ("Electronic"), // Электронный
     Other       ("Other"),      // Другое
     ;
 
     private final String name;
 
-    RequestFormat(String s) {
+    RequestFormatEnum(String s) {
         name = s;
     }
 

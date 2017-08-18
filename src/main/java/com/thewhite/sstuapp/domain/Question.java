@@ -1,6 +1,6 @@
 package com.thewhite.sstuapp.domain;
 
-import com.thewhite.sstuapp.domain.enumeration.QuestionStatus;
+import com.thewhite.sstuapp.domain.enumeration.QuestionStatusEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,7 +46,7 @@ public class Question extends AbstractAuditingEntity implements Serializable {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private QuestionStatus status;
+    private QuestionStatusEnum status;
 
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

@@ -2,6 +2,7 @@ package com.thewhite.sstuapp.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 public class DepartmentDTO {
 
     @ApiModelProperty(example = "89729055-843A-4EEB-88E1-71535B245D6F", required = true, value = "Идентификатор департамента.", position = 1)

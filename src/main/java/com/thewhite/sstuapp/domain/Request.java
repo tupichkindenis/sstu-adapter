@@ -1,6 +1,6 @@
 package com.thewhite.sstuapp.domain;
 
-import com.thewhite.sstuapp.domain.enumeration.RequestFormat;
+import com.thewhite.sstuapp.domain.enumeration.RequestFormatEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,7 +60,7 @@ public class Request extends AbstractAuditingEntity implements Serializable {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "format")
-    private RequestFormat format = RequestFormat.Electronic;
+    private RequestFormatEnum format = RequestFormatEnum.Electronic;
 
     /**
      * Регистрационный номер сопроводительного письма, с которым обращение поступило из Управления Президента

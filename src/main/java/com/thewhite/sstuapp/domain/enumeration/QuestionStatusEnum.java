@@ -1,9 +1,9 @@
 package com.thewhite.sstuapp.domain.enumeration;
 
 /**
- * QuestionStatus. Статус вопроса.
+ * QuestionStatusEnum. Статус вопроса.
  */
-public enum QuestionStatus {
+public enum QuestionStatusEnum {
     NotReceived         ("NotReceived"),      // Не поступило
     NotRegistered       ("NotRegistered"),    // Не зарегистрировано
     InWork              ("InWork"),           // Находится на рассмотрении
@@ -17,7 +17,7 @@ public enum QuestionStatus {
 
     private final String name;
 
-    QuestionStatus(String s) {
+    QuestionStatusEnum(String s) {
         name = s;
     }
 
