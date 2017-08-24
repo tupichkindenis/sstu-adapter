@@ -94,7 +94,10 @@ public class DepartmentResource {
         PagedDepartmentsDTO pagedDepartmentsDTO = new PagedDepartmentsDTO();
         pagedDepartmentsDTO.setElements(resultPage.getContent()
                 .stream()
-                .map(department -> new DepartmentDTO(department.getId().toString(), department.getName())).collect(Collectors.toList()));
+                .map(department -> DepartmentDTO.builder()
+                        .uuid(department.getId().toString())
+                        .name(department.getName())
+                        .build() ).collect(Collectors.toList()));
         pagedDepartmentsDTO.setCurrentPage(page);
         pagedDepartmentsDTO.setPageSize(size);
         pagedDepartmentsDTO.setTotalElements(resultPage.getTotalElements());
