@@ -2,6 +2,7 @@ package com.thewhite.sstuapp.domain.support;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,9 +17,10 @@ abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
     @Id
-    private UUID uuid;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @Column(name = "ID", unique = true, nullable = false, insertable = true, updatable = false, length = 36, precision = 0)
+    private UUID id;
 }

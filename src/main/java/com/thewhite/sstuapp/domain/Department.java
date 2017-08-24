@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,8 +17,9 @@ public @Data
 class Department extends AbstractEntity {
 
     @Column(nullable = false)
-    private UUID recordUuid;
+    private String name;
 
     @Column(nullable = false)
-    private String name;
+    private Boolean isDeprecated;
+
 }

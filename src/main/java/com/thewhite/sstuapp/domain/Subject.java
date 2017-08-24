@@ -32,6 +32,6 @@ class Subject extends AbstractEntity {
     @Column(length = 1024, nullable = false)
     private String name;
 
-    @Column(name = "deprecated", nullable = false)
+    @Column(nullable = false)
     private Boolean isDeprecated;
 }

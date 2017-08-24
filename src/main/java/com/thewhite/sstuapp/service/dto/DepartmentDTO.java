@@ -2,18 +2,17 @@ package com.thewhite.sstuapp.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 /**
  * Created by tupichkindenis on 16.08.17.
  */
-@Getter
-@Setter
 @Builder
-public class DepartmentDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public @Data
+class DepartmentDTO {
 
     @ApiModelProperty(example = "89729055-843A-4EEB-88E1-71535B245D6F", required = true, value = "Идентификатор департамента.", position = 1)
     @JsonProperty(value = "uuid", required = true)

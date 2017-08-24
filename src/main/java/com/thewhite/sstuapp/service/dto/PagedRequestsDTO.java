@@ -2,13 +2,13 @@ package com.thewhite.sstuapp.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 
-@Getter
-@Setter
-public class PagedRequestsDTO extends RequestsDTO {
+public @Data
+class PagedRequestsDTO extends RequestsDTO {
 
     @ApiModelProperty(value = "Общее колличество найденных элементов.", position = 100)
     @JsonProperty("totalItems")

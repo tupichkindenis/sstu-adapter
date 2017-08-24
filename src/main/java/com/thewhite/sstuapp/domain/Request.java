@@ -79,5 +79,4 @@ class Request extends AbstractImportableEntity {
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
-
 }
