@@ -4,6 +4,7 @@ import com.thewhite.sstuapp.service.dto.ErrorDTO;
 import io.swagger.annotations.ApiResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -42,10 +43,12 @@ public class SwaggerConfiguration {
                         new Tag("Department service", "All apis relating to departments."),
                         new Tag("Subject service", "All apis relating to subjects."),
                         new Tag("Handling report service", "All apis relating to handling report.")
-                ).globalResponseMessage(RequestMethod.GET,
+                )
+                .useDefaultResponseMessages(false)
+                .globalResponseMessage(RequestMethod.GET,
                         newArrayList(
                                 new ResponseMessageBuilder()
-                                        .code(400)
+                                        .code(HttpStatus.BAD_REQUEST.value())
                                         .message("The request was invalid or cannot be otherwise served.")
                                         .responseModel(new ModelRef("Error"))
                                         .build(),

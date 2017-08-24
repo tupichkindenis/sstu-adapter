@@ -16,7 +16,7 @@ import java.util.List;
 public class RequestsDTO {
 
     @ApiModelProperty(value = "Массив элементов.", position = 1)
-    @JsonProperty("items")
+    @JsonProperty("elements")
     private List<RequestDTO> items = new ArrayList<RequestDTO>();
 
 }

@@ -13,6 +13,6 @@ import java.util.List;
 public @Data
 class DepartmentsDTO {
     @ApiModelProperty(value = "Коллекция элементов.", position = 1)
-    @JsonProperty("items")
+    @JsonProperty("elements")
     private List<DepartmentDTO> elements = new ArrayList<>();
 }
