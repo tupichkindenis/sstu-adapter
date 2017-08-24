@@ -1,5 +1,7 @@
 package com.thewhite.sstuapp.domain;
 
+import com.thewhite.sstuapp.domain.support.AbstractEntity;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,29 +11,27 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created by tupichkindenis on 15.08.17.
  */
 @Entity
-@Table(name = "subject")
-@Setter
-@Getter
-@EqualsAndHashCode
-public class Subject implements Serializable {
+public @Data
+class Subject extends AbstractEntity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(nullable = false)
+    private UUID recordUuid;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "code", length = 15, nullable = false)
+    @Column(nullable = false)
     private String code;
 
-    @Column(name = "name", length = 1024, nullable = false)
+    @Column(length = 4, nullable = false)
+    private String shortCode;
+
+    @Column(length = 1024, nullable = false)
     private String name;
 
     @Column(name = "deprecated", nullable = false)
-    private boolean deprecated = false;
+    private Boolean isDeprecated;
 }

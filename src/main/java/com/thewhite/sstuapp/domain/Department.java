@@ -1,6 +1,8 @@
 package com.thewhite.sstuapp.domain;
 
+import com.thewhite.sstuapp.domain.support.AbstractEntity;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,26 +11,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- * Created by tupichkindenis on 15.08.17.
- */
 @Entity
-@Table(name = "department")
-@Getter
-@Setter
-@NoArgsConstructor
-public class Department implements Serializable {
+public @Data
+class Department extends AbstractEntity {
 
-    private static final long serialVersionUID = 1L;
+    @Column(nullable = false)
+    private UUID recordUuid;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @ApiModelProperty("skfgfdkjgs;ldf glkfg s")
-    @Column(name = "uuid", nullable = false)
-    private UUID uuid;
-
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 }

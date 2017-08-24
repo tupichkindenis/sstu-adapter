@@ -1,59 +1,33 @@
 package com.thewhite.sstuapp.domain;
 
 import com.thewhite.sstuapp.domain.enumeration.RequestFormatEnum;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.thewhite.sstuapp.domain.support.AbstractImportableEntity;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 
 /**
  * Обращение.
  */
 @Entity
-@Table(name = "request")
-@Setter
-@Getter
-@EqualsAndHashCode(callSuper = false)
-public class Request extends AbstractAuditingEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Идентификатор обращения.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    /**
-     * Идентификатор обращения в СЭД.
-     */
-    @NotNull
-    @Column(name = "external_id", nullable = false)
-    private Long externalId;
+public @Data
+class Request extends AbstractImportableEntity {
 
     /**
      * Орган, в котором происходит работа над обращением.
      */
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     private Department department;
 
     /**
      * Определяет, поступило ли обращение напрямую непосредственно от заявителя.
      */
-    @Column(name = "is_direct")
-    private boolean isDirect = true;
+    @Column(nullable = false)
+    private Boolean isDirect;
 
     /**
      * Формат обращения.
@@ -68,36 +42,34 @@ public class Request extends AbstractAuditingEntity implements Serializable {
      * Или номер обращения, присвоенный при регистрации в органе власти, если обращение поступило напрямую
      * непосредственно от заявителя.
      */
-    @Column(name = "number", nullable = false)
+    @Column(nullable = false)
     private String number;
 
     /**
-     * Дата регистрации сопроводительного письма, с которым обращение поступило из УРОГ или иного органа власти.
+     * Дата регистрации сопроводительного письма,
+     * с которым обращение поступило из УРОГ или иного органа власти.
      * Необязательное, если isDirect = true
      */
-    @Column(name = "create_date")
-    private Instant createDate;
+    @Column()
+    private Date createDate;
 
     /**
      * Строка, ФИО заявителя.
-     *
      */
-    @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
     /**
-     * Почтовый адрес заявителя.
-     * Строка, необязательное.
+     * Почтовый адрес заявителя. Строка, необязательное.
      */
-    @Column(name = "address")
+    @Column()
     private String address;
 
     /**
      * Адрес электронной почты заявителя.
      * Строка, необязательное.
      */
-    @Column(name = "email")
+    @Column(nullable = false)
     private String email;
 
     /**

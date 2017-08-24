@@ -1,41 +1,21 @@
 package com.thewhite.sstuapp.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.thewhite.sstuapp.domain.support.AbstractImportableEntity;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
-/**
- * Created by tupichkindenis on 15.08.17.
- */
 @Entity
-@Table(name = "attachment")
-@Setter
-@Getter
-@NoArgsConstructor
-public class Attachment implements Serializable {
+public @Data
+class Attachment extends AbstractImportableEntity {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @NotNull
-    @Column(name = "external_id", nullable = false)
-    private Long externalId;
-
-    @NotNull
-    @Column(name = "file_name", nullable = false)
+    @Column(nullable = false)
     private String fileName;
 
-    @Column(name = "mime_type")
+    @Column(nullable = false)
     private String mimeType;
 
-    @Column(name = "size")
+    @Column(nullable = false)
     private Integer size;
 
 }
