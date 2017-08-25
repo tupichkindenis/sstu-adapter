@@ -20,18 +20,20 @@ import java.util.UUID;
 public @Data
 class Subject extends AbstractEntity {
 
-    @Column(nullable = false)
-    private UUID recordUuid;
-
-    @Column(nullable = false)
+    @Column(length = 25, nullable = false)
     private String code;
-
     @Column(length = 4, nullable = false)
-    private String shortCode;
-
+    private String code0;
+    @Column(length = 4, nullable = false)
+    private String code1;
+    @Column(length = 4, nullable = false)
+    private String code2;
+    @Column(length = 4, nullable = false)
+    private String code3;
+    @Column(length = 4)
+    private String subCode;
     @Column(length = 1024, nullable = false)
     private String name;
-
-    @Column(nullable = false)
+    @Column
     private Boolean isDeprecated;
 }

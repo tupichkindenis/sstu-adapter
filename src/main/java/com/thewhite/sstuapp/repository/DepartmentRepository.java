@@ -6,10 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 public interface DepartmentRepository extends PagingAndSortingRepository<Department, UUID> {
-    Page<Department> findTo10ByNameIgnoreCaseContainsOrderByName(String name, Pageable paging);
+    Collection<Department> findTo10ByNameIgnoreCaseContainsOrderByName(String name);
 }
 

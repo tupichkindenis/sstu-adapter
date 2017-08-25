@@ -2,8 +2,9 @@ package com.thewhite.sstuapp.web.rest;
 
 import com.thewhite.sstuapp.domain.Department;
 import com.thewhite.sstuapp.repository.DepartmentRepository;
-import com.thewhite.sstuapp.service.dto.DepartmentDTO;
-import com.thewhite.sstuapp.service.dto.PagedDepartmentsDTO;
+import com.thewhite.sstuapp.service.dto.department.DepartmentsCollectionDTO;
+import com.thewhite.sstuapp.service.dto.department.DepartmentDTO;
+import com.thewhite.sstuapp.service.dto.department.DepartmentsPagedCollectionDTO;
 import com.thewhite.sstuapp.web.rest.exception.DepartmentNotFoundException;
 import com.thewhite.sstuapp.web.rest.support.ApiError;
 import io.swagger.annotations.ApiOperation;
@@ -38,10 +39,12 @@ public class DepartmentResource {
      * @param uuid Идентификатор обращения
      * @return Департамент
      */
-    @ApiOperation(value = "Получение департамента по идентификатору.", tags = {"Department service"} )
+    @ApiOperation(  value   = "Получение департамента по идентификатору.",
+                    notes   = "Подробная информация по департаменту.",
+                    tags    = {"Department service"} )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Департамент.",           response = DepartmentDTO.class),
-            @ApiResponse(code = 400, message = "Упс.",                   response = ApiError.class),
+            @ApiResponse(code = 200, message = "Информация о департаменте", response = DepartmentDTO.class),
+            @ApiResponse(code = 400, message = "Упс.", response = ApiError.class),
             @ApiResponse(code = 404, message = "Департамент не найден.", response = ApiError.class)
     })
 
@@ -64,45 +67,70 @@ public class DepartmentResource {
     }
 
     /**
+     * Получение списка департаментов
+     * @param page
+     * @param size
+     * @return
+     */
+    @ApiOperation(  value    = "Получение списка департаментов",
+                    notes    = "Получение департаментов пейджинированным списком",
+                    tags     = {"Department service"} )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code     = 200,
+                    message  = "Пейдженированная коллекция департаментов.",
+                    response = DepartmentsPagedCollectionDTO.class)
+    })
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    public ResponseEntity<DepartmentsPagedCollectionDTO> getAll(
+            @RequestParam(value = "page", required = false, defaultValue =  "0")  int page,
+            @RequestParam(value = "size", required = false, defaultValue = "20") int size ){
+
+        Page<Department> departmentPage = repository.findAll(new PageRequest(page, size));
+
+        DepartmentsPagedCollectionDTO departmentsPagedCollectionDTO = new DepartmentsPagedCollectionDTO();
+        departmentsPagedCollectionDTO.setItems(departmentPage.getContent().stream().map( department -> DepartmentDTO.builder()
+                .uuid(department.getId().toString())
+                .name(department.getName())
+                .build()).collect(Collectors.toList()));
+        departmentsPagedCollectionDTO.setTotalElements(departmentPage.getTotalElements());
+        departmentsPagedCollectionDTO.setTotalPages(departmentPage.getTotalPages());
+
+        return new ResponseEntity<>(departmentsPagedCollectionDTO, HttpStatus.OK);
+
+    }
+
+    /**
      * Поиск департаментов по имени.
-     * @param name Строка для поиска.
-     * @param page Номер страницы.
-     * @param size Кол-во записей.
+     * @param searchString Строка для поиска.
      * @return
      *        Пейдженированная коллекция департаментов.
      */
-    @ApiOperation(value = "Поиск департаментов по имени.",
-            notes = "Поиск департамента по имени. Имя должно содержать не менее 5 символов. " +
-                    "Если имя содержит менее 5 символов, запрос вернет пустой массив.",
-            tags = {"Department service"} )
+    @ApiOperation(  value = "Поиск департаментов по имени.",
+                    notes = "Поиск департамента по имени. Имя должно содержать не менее 5 символов. Если имя содержит менее 5 символов, запрос вернет пустой массив. Метод возвращает не более 10 элементов.",
+                    tags  = {"Department service"} )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Пейдженированная коллекция департаментов.", response = PagedDepartmentsDTO.class)
+            @ApiResponse( code = 200,  message  = "Коллекция департаментов (не более 10).", response = DepartmentsPagedCollectionDTO.class)
     })
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ResponseEntity<PagedDepartmentsDTO> search(
-            @ApiParam(value = "Строка для поиска.", defaultValue = "", type = "string") @RequestParam(value = "name",required = false ) String name,
-            @ApiParam(value = "Номер страницы.",   defaultValue = "0", type = "int")    @RequestParam(value = "page", defaultValue = "0",required = false) int page,
-            @ApiParam(value = "Кол-во записей.",   defaultValue = "5", type = "int")    @RequestParam(value = "size", defaultValue = "5",required = false) int size ){
+    public ResponseEntity<DepartmentsCollectionDTO> search(
+            @ApiParam(value = "Строка поиска.", type = "string")
+            @RequestParam(value = "name") String searchString ){
 
-        if (name.length() < NAME_MIN_LENGTH_TO_SEARCH){
-            return new ResponseEntity<>( new PagedDepartmentsDTO(), HttpStatus.OK );
+        if (searchString.length() < NAME_MIN_LENGTH_TO_SEARCH){
+            return new ResponseEntity<>( new DepartmentsCollectionDTO(), HttpStatus.OK );
         }
 
-        Page<Department> resultPage = repository
-                .findTo10ByNameIgnoreCaseContainsOrderByName(name, new PageRequest(page,size));
-
-        PagedDepartmentsDTO pagedDepartmentsDTO = new PagedDepartmentsDTO();
-        pagedDepartmentsDTO.setElements(resultPage.getContent()
+        DepartmentsCollectionDTO departmentsCollectionDTO = new DepartmentsCollectionDTO();
+        departmentsCollectionDTO.setItems(repository
+                .findTo10ByNameIgnoreCaseContainsOrderByName(searchString)
                 .stream()
-                .map(department -> DepartmentDTO.builder()
+                .map( department -> DepartmentDTO.builder()
                         .uuid(department.getId().toString())
                         .name(department.getName())
-                        .build() ).collect(Collectors.toList()));
-        pagedDepartmentsDTO.setCurrentPage(page);
-        pagedDepartmentsDTO.setPageSize(size);
-        pagedDepartmentsDTO.setTotalElements(resultPage.getTotalElements());
-        pagedDepartmentsDTO.setTotalPages(resultPage.getTotalPages());
+                        .build() )
+                .collect(Collectors.toList()));
 
-        return new ResponseEntity<>(pagedDepartmentsDTO, HttpStatus.OK);
+        return new ResponseEntity<>(departmentsCollectionDTO, HttpStatus.OK);
     }
 }

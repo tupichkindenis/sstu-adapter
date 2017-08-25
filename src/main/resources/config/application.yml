@@ -2,10 +2,11 @@ spring:
   application:
     name: sstu
   profiles:
-    active: #spring.profiles.active#
+    active: prod
   jpa:
     open-in-view: false
     hibernate:
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
