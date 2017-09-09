@@ -14,13 +14,14 @@ import java.util.List;
  * Обращение.
  */
 @Entity
+@Table(name = "Requests")
 public @Data
 class Request extends AbstractImportableEntity {
 
     /**
      * Орган, в котором происходит работа над обращением.
      */
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+    @ManyToOne(optional = false)
     private Department department;
 
     /**
@@ -50,8 +51,22 @@ class Request extends AbstractImportableEntity {
      * с которым обращение поступило из УРОГ или иного органа власти.
      * Необязательное, если isDirect = true
      */
-    @Column()
+    @Column
+    @Temporal(TemporalType.DATE)
     private Date createDate;
+
+    /**
+     * Регистрационый номер обращения в органе.
+     */
+    @Column(nullable = false)
+    private String regNumber;
+
+    /**
+     * Дата регистрации обращения в органе.
+     */
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date regDate;
 
     /**
      * Строка, ФИО заявителя.
@@ -62,7 +77,7 @@ class Request extends AbstractImportableEntity {
     /**
      * Почтовый адрес заявителя. Строка, необязательное.
      */
-    @Column()
+    @Column
     private String address;
 
     /**
@@ -71,12 +86,4 @@ class Request extends AbstractImportableEntity {
      */
     @Column(nullable = false)
     private String email;
-
-    /**
-     * Массив данных об обработке вопросов в данном органе (далее — вопросы).
-     * Должен быть указан хотя бы один вопрос.
-     */
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
-
 }

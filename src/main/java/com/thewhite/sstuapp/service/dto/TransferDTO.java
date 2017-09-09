@@ -24,11 +24,11 @@ public class TransferDTO {
 
     @ApiModelProperty(value = "Регистрационный номер исходящего сопроводительного документа при направлении вопроса, содержащегося в обращении, в иной орган (учереждение, организацию).", required = true, position = 2, example = "123456-AB")
     @JsonProperty("number")
-    private String number = null;
+    private String number;
 
     @ApiModelProperty(example = "2016-11-18", value = "Дата направления вопроса, содержащегося в обращении, в иной орган (учреждение, организацию)", required = true, position = 3)
     @JsonProperty("date")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-    private Date date = null;
+    private Date date;
 
 }

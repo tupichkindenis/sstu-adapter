@@ -25,6 +25,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "/webjars/**",
                     "/swagger-resources/configuration/ui",
                     "/swagge‌​r-ui.html",
+                    "/metrics/**",
                     "/swagger-resources/configuration/security").permitAll();
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();

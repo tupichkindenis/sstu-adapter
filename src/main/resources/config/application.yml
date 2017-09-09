@@ -2,7 +2,7 @@ spring:
   application:
     name: sstu
   profiles:
-    active: prod
+    active: dev
   jpa:
     open-in-view: false
     hibernate:
@@ -13,3 +13,27 @@ spring:
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
+
+
+remote:
+  server: http://172.18.205.26:7777
+  application: pls/apex/edoapi/sstu
+  api:
+    offices:
+      base:           offices
+      find-all:         ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all
+      find-all-reduced:  ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all_identifier
+      find-one:         ${remote.server}/${remote.application}/${remote.api.offices.base}/get_by_id
+    requests:
+      base:           complaints
+      find-all:         ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all
+      find-all-reduced:  ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all_identifier
+      find-one:         ${remote.server}/${remote.application}/${remote.api.offices.base}/get_by_id
+    questions:
+      base:           questions
+      find-all:         ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all
+      find-all-reduced:  ${remote.server}/${remote.application}/${remote.api.offices.base}/find_all_identifier
+      find-one:         ${remote.server}/${remote.application}/${remote.api.offices.base}/get_by_id
+    attachments:
+      base:           files
+      find-one:         ${remote.server}/${remote.application}/${remote.api.offices.base}/get_by_id

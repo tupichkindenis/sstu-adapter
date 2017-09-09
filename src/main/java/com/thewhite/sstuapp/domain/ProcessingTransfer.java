@@ -2,22 +2,19 @@ package com.thewhite.sstuapp.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Date;
 
 @Embeddable
 public @Data
 class ProcessingTransfer implements Serializable {
-
-    @ManyToOne(optional = true)
-    private Department transferDepartment;
-
-    @Column(nullable = true)
+    @ManyToOne
+    private Department transferredTo;
+    @Column
     private String transferNumber;
-
-    @Column(nullable = true)
-    private Instant transferTime;
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date transferTime;
 }

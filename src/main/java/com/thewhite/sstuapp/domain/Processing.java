@@ -12,30 +12,57 @@ import java.util.Date;
  */
 @Entity
 public @Data
-class Processing extends AbstractAuditableEntity implements Serializable {
+class Processing extends AbstractAuditableEntity {
 
     private static final long serialVersionUID = 1L;
 
-
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+    /**
+     * Орган в котором происходит работа с обрашением.
+     */
+    @ManyToOne(optional = false)
     private Department department;
 
+    /**
+     * Обращение.
+     */
+    @ManyToOne(optional = false)
+    private Request request;
+
+    /**
+     * Вопрос.
+     */
     @ManyToOne(optional = false)
     private Question question;
 
+    /**
+     * Статус вопроса. Один вопрос может обладать несколькими статусами.
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private QuestionStatusEnum status;
 
-    @Column(nullable = true)
+    /**
+     * Признак того, что меры были приняты.
+     */
+    @Column
     private Boolean isActionTaken;
 
-    @Column(nullable = true)
+    /**
+     * Дата ответа заявителю.
+     */
+    @Column
+    @Temporal(TemporalType.DATE)
     private Date responseDate;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Attachment attachment;
+    /**
+     * Информация содержащая ответ заявителю.
+     */
+    @Embedded
+    private ProcessingAttachment processingAttachment;
 
+    /**
+     * Информация содержащая данные о перенаправлении вопроса в другой орган.
+     */
     @Embedded
     private ProcessingTransfer transfer;
 }

@@ -14,12 +14,13 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Created by tupichkindenis on 15.08.17.
+ * Subject entity class.
+ *
+ * @author tupichkindenis
  */
 @Entity
 public @Data
 class Subject extends AbstractEntity {
-
     @Column(length = 25, nullable = false)
     private String code;
     @Column(length = 4, nullable = false)

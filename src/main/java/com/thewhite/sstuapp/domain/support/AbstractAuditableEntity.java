@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 
 /**
  * Base abstract class for entities which will hold definitions for created,
@@ -34,7 +35,7 @@ abstract class AbstractAuditableEntity extends AbstractEntity {
     @CreatedDate
     @Column(name = "created_date", nullable = false)
     @JsonIgnore
-    private Instant createdDate = Instant.now();
+    private Date createdDate = new Date();
 
     @LastModifiedBy
     @Column(name = "last_modified_by", length = 50)
@@ -44,5 +45,5 @@ abstract class AbstractAuditableEntity extends AbstractEntity {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     @JsonIgnore
-    private Instant lastModifiedDate = Instant.now();
+    private Date lastModifiedDate = new Date();
 }
